@@ -2,10 +2,10 @@
 
 // Token
 // deployed first
-const Cash = artifacts.require('Cash')
-const Bond = artifacts.require('Bond')
-const Share = artifacts.require('Share')
+const GameStopToken = artifacts.require('GameStopToken')
 const MockDai = artifacts.require('MockDai');
+// const MockUSDT = artifacts.require('MockUSDT');
+const MockWETH = artifacts.require('MockWETH');
 
 // ============ Main Migration ============
 
@@ -18,12 +18,14 @@ module.exports = migration
 // ============ Deploy Functions ============
 
 async function deployToken(deployer, network, accounts) {
-  await deployer.deploy(Cash);
-  await deployer.deploy(Bond);
-  await deployer.deploy(Share);
+  await deployer.deploy(GameStopToken);
 
-  if (network !== 'mainnet') {
+  if (!['mainnet', 'mainnet-fork'].includes(network)) {
     const dai = await deployer.deploy(MockDai);
     console.log(`MockDAI address: ${dai.address}`);
+    // const usdt = await deployer.deploy(MockUSDT);
+    // console.log(`MockUSDT address: ${usdt.address}`);
+    const weth = await deployer.deploy(MockWETH);
+    console.log(`MockWETH address: ${weth.address}`);
   }
 }

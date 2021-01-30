@@ -1,41 +1,41 @@
 // https://docs.basis.cash/mechanisms/yield-farming
-const INITIAL_BAC_FOR_POOLS = 160000;
-const INITIAL_BAS_FOR_DAI_BAC = 750000;
-const INITIAL_BAS_FOR_DAI_BAS = 250000;
+const INITIAL_GME_FOR_POOLS = 300000;
+const INITIAL_GME_FOR_LP = 200000;
 
 // const POOL_START_DATE = Date.parse('2020-11-30T00:00:00Z') / 1000;
-const POOL_START_DATE = Date.parse('2020-12-30T02:00:00Z') / 1000; // plus 8 hours is our time zone
-// const POOL_START_DATE = Date.parse('2020-12-25T08:00:00Z') / 1000; // plus 8 hours is our time zone
+const POOL_START_DATE = process.env.START_NOW ? Math.round(Date.now() / 1000) + 3600 : Date.parse('2021-01-31T04:00:00Z') / 1000;
 
-const bacPools = [
-  { contractName: 'MICDAIPool', token: 'DAI' },
-  { contractName: 'MICUSDTPool', token: 'USDT' },
-  { contractName: 'MICESDPool', token: 'ESD' },
-  { contractName: 'MICBACPool', token: 'BAC' },
-  { contractName: 'MICMITHPool', token: 'MITH' },
-  { contractName: 'MICCREAMPool', token: 'CREAM' },
-  { contractName: 'MICFRAXPool', token: 'FRAX' },
-  { contractName: 'MICYFIPool', token: 'YFI' },
-  { contractName: 'MICCRVPool', token: 'CRV' },
-  { contractName: 'MICBUSDPool', token: 'BUSD' },
-  { contractName: 'MICLINKPool', token: 'LINK' },
-  { contractName: 'MICCOMPPool', token: 'COMP' },
-  { contractName: 'MICAAVEPool', token: 'AAVE' },
-  { contractName: 'MICUSDCPool', token: 'USDC' },
-  { contractName: 'MICSUSHIPool', token: 'SUSHI' },
-  { contractName: 'MICSUSDPool', token: 'SUSD' },
+const stakingPools = [
+  { contractName: 'GMEYFIPool', token: 'YFI' },
+  { contractName: 'GMELINKPool', token: 'LINK' },
+  { contractName: 'GMECREAMPool', token: 'CREAM' },
+  { contractName: 'GMErenDOGEPool', token: 'renDOGE' },
+  { contractName: 'GMEUSDTPool', token: 'USDT' },
+  { contractName: 'GMEBUSDPool', token: 'BUSD' },
+  { contractName: 'GMEUSDCPool', token: 'USDC' },
+  { contractName: 'GMECRVPool', token: 'CRV' },
+  { contractName: 'GMECOMPPool', token: 'COMP' },
+  { contractName: 'GMESUSHIPool', token: 'SUSHI' },
+  { contractName: 'GMEBADGERPool', token: 'BADGER' },
+  { contractName: 'GMEDSDPool', token: 'DSD' },
+  { contractName: 'GMEESDPool', token: 'ESD' },
+  { contractName: 'GMEFRAXPool', token: 'FRAX' },
+  { contractName: 'GMEMICPool', token: 'MIC' },
+  { contractName: 'GMEOGNPool', token: 'OGN' },
+  { contractName: 'GMEOUSDPool', token: 'OUSD' },
+  { contractName: 'GMECVPPool', token: 'CVP' },
+  { contractName: 'GMEALBTPool', token: 'ALBT' },
+  { contractName: 'GMESPDRPool', token: 'SPDR' },
 ];
 
-const basPools = {
-  DAIMIC: { contractName: 'DAIMICLPTokenSharePool', token: 'DAI_MIC-LPv2' },
-  DAIMIS: { contractName: 'DAIMISLPTokenSharePool', token: 'DAI_MIS-LPv2' },
+const lpPools = {
+  ETHGME: { contractName: 'ETHGMELPTokenSharePool', token: 'ETH_GME-UNI-LPv2' },
 }
 
 module.exports = {
   POOL_START_DATE,
-  INITIAL_BAC_FOR_POOLS,
-  INITIAL_BAS_FOR_DAI_BAC,
-  INITIAL_BAS_FOR_DAI_BAS,
-  bacPools,
-  basPools,
+  INITIAL_GME_FOR_POOLS,
+  INITIAL_GME_FOR_LP,
+  stakingPools,
+  lpPools,
 };

@@ -1,30 +1,27 @@
 const knownContracts = require('./known-contracts');
 const { POOL_START_DATE } = require('./pools');
 
-const Cash = artifacts.require('Cash');
-const Share = artifacts.require('Share');
-const Oracle = artifacts.require('Oracle');
-const MockDai = artifacts.require('MockDai');
+const GameStopToken = artifacts.require('GameStopToken');
+const UniswapUtils = artifacts.require('UniswapUtils');
+const MockWETH = artifacts.require('MockWETH');
 const IERC20 = artifacts.require('IERC20');
 
-const DAIBACLPToken_BASPool = artifacts.require('DAIBACLPTokenSharePool')
-const DAIBASLPToken_BASPool = artifacts.require('DAIBASLPTokenSharePool')
+const ETHGMELPTokenSharePool = artifacts.require('ETHGMELPTokenSharePool')
 
 const UniswapV2Factory = artifacts.require('UniswapV2Factory');
 
-module.exports = async (deployer, network, accounts) => {
+module.exports = async (deployer, network_, accounts) => {
+  const network = network_ === 'mainnet-fork' ? 'mainnet' : network_
   const uniswapFactory = ['dev'].includes(network)
     ? await UniswapV2Factory.deployed()
     : await UniswapV2Factory.at(knownContracts.UniswapV2Factory[network]);
-  const dai = network === 'mainnet'
-    ? await IERC20.at(knownContracts.DAI[network])
-    : await MockDai.deployed();
+  const weth = network === 'mainnet'
+    ? await IERC20.at(knownContracts.WETH[network])
+    : await MockWETH.deployed();
 
-  const oracle = await Oracle.deployed();
+  const uniswapUtils = await UniswapUtils.deployed();
 
-  const dai_bac_lpt = await oracle.pairFor(uniswapFactory.address, Cash.address, dai.address);
-  const dai_bas_lpt = await oracle.pairFor(uniswapFactory.address, Share.address, dai.address);
+  const eth_gme_lpt = await uniswapUtils.pairFor(uniswapFactory.address, GameStopToken.address, weth.address);
 
-  await deployer.deploy(DAIBACLPToken_BASPool, Share.address, dai_bac_lpt, POOL_START_DATE);
-  await deployer.deploy(DAIBASLPToken_BASPool, Share.address, dai_bas_lpt, POOL_START_DATE);
+  await deployer.deploy(ETHGMELPTokenSharePool, GameStopToken.address, eth_gme_lpt, POOL_START_DATE);
 };

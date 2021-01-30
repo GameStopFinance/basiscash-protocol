@@ -1,3 +1,5 @@
+require('dotenv').config({})
+
 import '@nomiclabs/hardhat-ethers';
 import '@nomiclabs/hardhat-etherscan';
 import 'hardhat-gas-reporter';
@@ -7,6 +9,12 @@ export default {
   default: 'hardhat',
   networks: {
     hardhat: {},
+    rinkeby: {
+      url: process.env.RINKEBY_PROVIDER,
+      accounts: [
+        process.env.RINKEBY_WALLET_PK
+      ],
+    }
   },
   solidity: {
     version: '0.6.12',

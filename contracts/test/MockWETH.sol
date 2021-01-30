@@ -3,11 +3,11 @@ pragma solidity ^0.6.0;
 import '@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol';
 import '../owner/Operator.sol';
 
-contract MockDai is ERC20Burnable, Operator {
+contract MockWETH is ERC20Burnable, Operator {
     /**
      * @notice Constructs the GameStop Token ERC-20 contract.
      */
-    constructor() public ERC20('DAI', 'DAI') {
+    constructor() public ERC20('WETH', 'WETH') {
         _mint(msg.sender, 10000 * 10**18);
     }
 
